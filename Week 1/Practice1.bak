@@ -1,0 +1,3 @@
+#lang r5rs
+;;Exercises from 
+(define (factorial x) (* x (if (> x 1) (factorial (- x 1)) 1)))
