@@ -7,9 +7,10 @@
 
 ;;Ex. 3 - Fibonacci numbers
 
-(define (1- x) (- x 1))
-(define (2- x) (- x 2))
+
 (define (fib x)
+  (define (1- x) (- x 1))
+  (define (2- x) (- x 2))
   (if (<= x 1) x (+ (fib (1- x)) (fib (2- x)))))
 
 ;;Ex. 4 - Sum of numbers in interval [a,b]

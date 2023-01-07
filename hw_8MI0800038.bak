@@ -1,0 +1,43 @@
+#lang r5rs
+
+
+(define (accumulate op nv a b term next)
+  (if (> a b) nv
+      (op (term a)
+          (accumulate op nv (next a) b term next))))
+
+(define (accumulate-i op nv a b term next)
+    (if (> a b) nv
+        (accumulate-i op (op nv (term a)) (next a) b term next)))
+
+;;Zadacha 1
+
+(define (mod7 x) (modulo x 7))
+(define (id x) x)
+(define (1+ x) (+ x 1))
+
+
+(define (argmin f a b)
+  (define (minV x y)
+    (if (< (f x) (f y)) x y))
+  (accumulate-i minV a a b id 1+))
+
+;;Zadacha 2
+
+(define (sumpair x)
+  (+ (car x) (cdr x)))
+
+(define (divCount x)
+  (define (checkDiv currDivCount div)
+    (if (= (remainder x div) 0)
+        (1+ currDivCount) currDivCount))
+  (accumulate-i checkDiv 0 1 x id 1+))
+
+(define (best-pair a b)
+  (define (maxDiv x y)
+    (if (> (divCount (sumpair x)) (divCount (sumpair y))) x y))
+  (define (pairb x)
+    (cons x b))
+  (accumulate-i maxDiv (pairb a) a (- b 1) pairb 1+))
+  
+  
